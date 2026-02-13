@@ -1,16 +1,15 @@
-const OpenAI = require("openai");
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_KEY
-});
+const axios = require("axios");
 
 async function getEmbedding(text) {
-  const response = await openai.embeddings.create({
-    model: "text-embedding-3-small",
-    input: text
-  });
+  const response = await axios.post(
+    "http://localhost:11434/api/embeddings",
+    {
+      model: "nomic-embed-text:latest",
+      prompt: text
+    }
+  );
 
-  return response.data[0].embedding;
+  return response.data.embedding;
 }
 
 module.exports = getEmbedding;

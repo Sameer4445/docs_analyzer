@@ -1,6 +1,5 @@
-import Upload from "./components/upload.jsx";
-import Chat from "./components/chat.jsx";
-
+import Upload from "./components/Upload.jsx";
+import Chat from "./components/Chat.jsx";
 
 function App() {
   return (

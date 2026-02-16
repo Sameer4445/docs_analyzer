@@ -4,11 +4,15 @@ import axios from "axios";
 function Chat() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const askQuestion = async () => {
     if (!question) return;
 
     try {
+      setLoading(true);
+      setAnswer("");
+
       const res = await axios.post(
         "http://localhost:8000/api/ask",
         { question }
@@ -16,8 +20,9 @@ function Chat() {
 
       setAnswer(res.data.answer);
     } catch (err) {
-      console.error(err);
       setAnswer("Error getting answer");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,11 +37,13 @@ function Chat() {
         placeholder="Ask something..."
       />
 
-      <button onClick={askQuestion}>Ask</button>
+      <button onClick={askQuestion} disabled={loading}>
+        {loading ? "Thinking..." : "Ask"}
+      </button>
 
       <div>
         <h3>Answer:</h3>
-        <p>{answer}</p>
+        {loading ? <p>Generating answer...</p> : <p>{answer}</p>}
       </div>
     </div>
   );

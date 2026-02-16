@@ -1,4 +1,4 @@
-function chunkText(text, chunkSize = 200) {
+function chunkText(text, chunkSize = 500) {
   const words = text.split(" ");
   let chunks = [];
 

@@ -7,7 +7,7 @@ function Chat() {
   const [loading, setLoading] = useState(false);
 
   const askQuestion = async () => {
-    if (!question) return;
+    if (!question.trim()) return;
 
     try {
       setLoading(true);
@@ -21,31 +21,37 @@ function Chat() {
       setAnswer(res.data.answer);
     } catch (err) {
       setAnswer("Error getting answer");
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Ask Question</h2>
-
-      <input
-        type="text"
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Ask something..."
-      />
-
-      <button onClick={askQuestion} disabled={loading}>
-        {loading ? "Thinking..." : "Ask"}
-      </button>
+    <>
+      <div className="section-title">Ask Question</div>
 
       <div>
-        <h3>Answer:</h3>
-        {loading ? <p>Generating answer...</p> : <p>{answer}</p>}
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask something..."
+        />
+
+        <button onClick={askQuestion} disabled={loading}>
+          {loading ? "Thinking..." : "Ask"}
+        </button>
       </div>
-    </div>
+
+      {loading && (
+        <div className="answer-box">Generating answer...</div>
+      )}
+
+      {!loading && answer && (
+        <div className="answer-box">{answer}</div>
+      )}
+    </>
   );
 }
 

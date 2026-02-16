@@ -20,15 +20,22 @@ function Upload() {
       console.error(err);
     }
   };
-
+  
   return (
-    <div>
-      <h2>Upload Document</h2>
-      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+    <>
+      <div className="section-title">Upload Document</div>
+
+      <input
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+      />
+
       <button onClick={handleUpload}>Upload</button>
-      <p>{status}</p>
-    </div>
+
+      <div className="status-text">{status}</div>
+    </>
   );
+
 }
 
 export default Upload;

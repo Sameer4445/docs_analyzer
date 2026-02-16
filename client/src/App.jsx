@@ -1,13 +1,19 @@
-import Upload from "./components/Upload.jsx";
-import Chat from "./components/Chat.jsx";
+import Upload from "./components/Upload";
+import Chat from "./components/Chat";
+import "./App.css";
 
 function App() {
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Context-Aware Document QA</h1>
-      <Upload />
-      <hr />
-      <Chat />
+    <div className="app-container">
+      <h1 className="app-title">Context-Aware Document QA</h1>
+
+      <div className="card">
+        <Upload />
+      </div>
+
+      <div className="card">
+        <Chat />
+      </div>
     </div>
   );
 }

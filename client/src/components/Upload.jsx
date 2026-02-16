@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Upload() {
+function Upload({ setDocumentId }) {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
 
@@ -13,27 +13,39 @@ function Upload() {
 
     try {
       setStatus("Uploading...");
-      await axios.post("http://localhost:8000/api/upload", formData);
+
+      const res = await axios.post(
+        "http://localhost:8000/api/upload",
+        formData
+      );
+
+      // save documentId from backend
+      setDocumentId(res.data.documentId);
+
       setStatus("Upload successful ✅");
     } catch (err) {
       setStatus("Upload failed ❌");
       console.error(err);
     }
   };
-  
+
   return (
-    <>
-      <div className="section-title">Upload Document</div>
+  <>
+    <div className="section-title">Upload Document</div>
 
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+    <input
+      type="file"
+      onChange={(e) => setFile(e.target.files[0])}
+    />
 
-      <button onClick={handleUpload}>Upload</button>
+    <button onClick={handleUpload}>
+      Upload
+    </button>
 
-      <div className="status-text">{status}</div>
-    </>
+    <div className="status-text">
+      {status}
+    </div>
+  </>
   );
 
 }

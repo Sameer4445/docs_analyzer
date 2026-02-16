@@ -1,18 +1,27 @@
+import { useState } from "react";
 import Upload from "./components/Upload";
 import Chat from "./components/Chat";
 import "./App.css";
 
 function App() {
-  return (
-    <div className="app-container">
-      <h1 className="app-title">Context-Aware Document QA</h1>
+  const [documentId, setDocumentId] = useState(null);
 
-      <div className="card">
-        <Upload />
+  return (
+    <div className="app-wrapper">
+      <div className="app-header">
+        Context-Aware Document QA
       </div>
 
-      <div className="card">
-        <Chat />
+      <div className="app-subtitle">
+        Intelligent retrieval grounded on your uploaded content
+      </div>
+
+      <div className="panel">
+        <Upload setDocumentId={setDocumentId} />
+      </div>
+
+      <div className="panel">
+        <Chat documentId={documentId} />
       </div>
     </div>
   );

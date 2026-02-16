@@ -1,21 +1,26 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Chat() {
+function Chat({ documentId }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
 
   const askQuestion = async () => {
-    if (!question.trim()) return;
+    if (!question || !documentId) {
+      setAnswer("Upload a document first.");
+      return;
+    }
 
     try {
       setLoading(true);
-      setAnswer("");
 
       const res = await axios.post(
         "http://localhost:8000/api/ask",
-        { question }
+        {
+          question,
+          documentId
+        }
       );
 
       setAnswer(res.data.answer);
@@ -26,33 +31,43 @@ function Chat() {
       setLoading(false);
     }
   };
-
   return (
-    <>
-      <div className="section-title">Ask Question</div>
+  <>
+    <div className="section-title">Ask Question</div>
 
-      <div>
-        <input
-          type="text"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask something..."
-        />
+    <div>
+      <input
+        type="text"
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !loading) {
+            askQuestion();
+          }
+        }}
+        placeholder="Ask something about your document..."
+      />
 
-        <button onClick={askQuestion} disabled={loading}>
-          {loading ? "Thinking..." : "Ask"}
-        </button>
+
+      <button onClick={askQuestion} disabled={loading}>
+        {loading ? "Thinking..." : "Ask"}
+      </button>
+    </div>
+
+    {loading && (
+      <div className="answer-container">
+        Generating response...
       </div>
+    )}
 
-      {loading && (
-        <div className="answer-box">Generating answer...</div>
-      )}
-
-      {!loading && answer && (
-        <div className="answer-box">{answer}</div>
-      )}
-    </>
+    {!loading && answer && (
+      <div className="answer-container">
+        {answer}
+      </div>
+    )}
+  </>
   );
+
 }
 
 export default Chat;

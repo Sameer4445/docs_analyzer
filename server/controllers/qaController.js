@@ -59,6 +59,7 @@ exports.askQuestion = async (req, res) => {
   } catch (error) {
     console.error("QA Error:", error);
     res.status(500).json({
+      
       error: error.message,
     });
   }

@@ -9,17 +9,14 @@ exports.askQuestion = async (req, res) => {
   try {
     const { question, documentId } = req.body;
 
-    // 1️⃣ Validation
     if (!question || !documentId) {
       return res.status(400).json({
         error: "Question and documentId are required",
       });
     }
 
-    // 2️⃣ Generate embedding for question
     const questionEmbedding = await getEmbedding(question);
 
-    // 3️⃣ Fetch ONLY current document chunks
     const docs = await Document.find(
       { documentId },
       { text: 1, embedding: 1 }

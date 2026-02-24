@@ -1,15 +1,23 @@
 const axios = require("axios");
 
+const HF_API_KEY = process.env.HF_API_KEY;
+
+// Good embedding model
+const MODEL = "sentence-transformers/all-MiniLM-L6-v2";
+
 async function getEmbedding(text) {
   const response = await axios.post(
-    "http://localhost:11434/api/embeddings",
+    `https://api-inference.huggingface.co/models/${MODEL}`,
+    { inputs: text },
     {
-      model: "nomic-embed-text:latest",
-      prompt: text
+      headers: {
+        Authorization: `Bearer ${HF_API_KEY}`,
+        "Content-Type": "application/json"
+      }
     }
   );
 
-  return response.data.embedding;
+  return response.data[0]; 
 }
 
 module.exports = getEmbedding;

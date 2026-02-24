@@ -45,6 +45,7 @@ exports.askQuestion = async (req, res) => {
 
     // 6️⃣ Generate grounded answer
     const answer = await generateAnswer(context, question);
+    
 
     res.json({
       answer,

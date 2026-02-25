@@ -106,8 +106,8 @@ npm run dev
 
 | Service | URL |
 |---------|-----|
-| Frontend | http://localhost:5173 |
-| Backend | http://localhost:8000 |
+| Frontend | https://docs-analyzer-tawny.vercel.app/ |
+| Backend | https://docs-analyzer-ygcv.onrender.com |
 
 ---
 

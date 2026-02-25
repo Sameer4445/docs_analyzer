@@ -221,8 +221,8 @@ Ultra-low latency, fast cloud inference, and free-tier availability for developm
 
 | Component | Recommended Platforms |
 |-----------|----------------------|
-| Backend | Render, Railway, Fly.io |
-| Frontend | Vercel, Netlify |
+| Backend | Render |
+| Frontend | Vercel |
 | Database | MongoDB Atlas |
 
 ---

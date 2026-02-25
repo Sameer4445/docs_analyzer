@@ -14,12 +14,14 @@ function Upload({ setDocumentId }) {
     try {
       setStatus("Uploading...");
 
+      const API = import.meta.env.VITE_API_URL;
+
       const res = await axios.post(
-        "http://localhost:8000/api/upload",
+        `${API}/api/upload`,
         formData
       );
 
-      // save documentId from backend
+      // Save documentId returned from backend
       setDocumentId(res.data.documentId);
 
       setStatus("Upload successful ✅");
@@ -30,24 +32,23 @@ function Upload({ setDocumentId }) {
   };
 
   return (
-  <>
-    <div className="section-title">Upload Document</div>
+    <>
+      <div className="section-title">Upload Document</div>
 
-    <input
-      type="file"
-      onChange={(e) => setFile(e.target.files[0])}
-    />
+      <input
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+      />
 
-    <button onClick={handleUpload}>
-      Upload
-    </button>
+      <button onClick={handleUpload}>
+        Upload
+      </button>
 
-    <div className="status-text">
-      {status}
-    </div>
-  </>
+      <div className="status-text">
+        {status}
+      </div>
+    </>
   );
-
 }
 
 export default Upload;
